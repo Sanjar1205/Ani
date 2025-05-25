@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Demon Slayer - AnimeMedia</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #111;
+      color: #fff;
+    }
+
+    header {
+      background-color: #222;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      color: #e94560;
+      font-weight: bold;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .season-buttons button,
+    .episodes-container button {
+      margin: 5px;
+      padding: 10px 15px;
+      background-color: #e94560;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .video-player {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .video-player video {
+      width: 80%;
+      max-width: 800px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #e94560;
+    }
+
+    .video-player.hidden {
+      display: none;
+    }
+
+    .anime-detail {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    footer {
+      background-color: #222;
+      padding: 15px;
+      text-align: center;
+      margin-top: 40px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">AnimeMedia</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Bosh sahifa</a></li>
+        <li><a href="#">Janrlar</a></li>
+        <li><a href="#">Top Anime</a></li>
+        <li><a href="#">Kontakt</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="anime-detail">
+    <h1>Demon Slayer</h1>
+    <p>Tanjiro o‘z singlisini qutqarish uchun iblislar bilan kurashadi.</p>
+
+    <h2>Mavsumlar</h2>
+    <div class="season-buttons">
+      <button onclick="showEpisodes('season1')">1-mavsum</button>
+      <button onclick="showEpisodes('season2')">2-mavsum</button>
+    </div>
+
+    <div id="episodes" class="episodes-container">
+      <!-- Qismlar shu yerga JS orqali yuklanadi -->
+    </div>
+
+    <div id="video-player" class="video-player hidden">
+      <video id="anime-video" controls>
+        <source src="" type="video/mp4" />
+        Brauzeringiz video pleerni qo‘llab-quvvatlamaydi.
+      </video>
+      <br />
+      <button onclick="closeVideo()">Yopish</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 AnimeMedia. Barcha huquqlar himoyalangan.</p>
+  </footer>
+
+  <script>
+    // Barcha qismlar ro'yxati
+    const episodesData = {
+      season1: [
+        { title: "1-qism: Shafqatsizlik", src: "Videos/season1-ep1.mp4" },
+        { title: "2-qism: Murabbiy Sakonji", src: "Videos/season1-ep2.mp4" }
+      ],
+      season2: [
+        { title: "1-qism: Olov poezdi", src: "Videos/season2-ep1.mp4" },
+        { title: "2-qism: Tengen bilan", src: "Videos/season2-ep2.mp4" }
+      ]
+    };
+
+    // Epizod tugmalarini chiqarish
+    function showEpisodes(season) {
+      const episodes = episodesData[season];
+      const container = document.getElementById("episodes");
+      container.innerHTML = '';
+
+      episodes.forEach(ep => {
+        const btn = document.createElement("button");
+        btn.textContent = ep.title;
+        btn.onclick = () => playEpisode(ep.src);
+        container.appendChild(btn);
+      });
+    }
+
+    // Video o'ynatish funksiyasi
+    function playEpisode(src) {
+      const player = document.getElementById("video-player");
+      const video = document.getElementById("anime-video");
+
+      video.pause();
+      video.setAttribute("src", src);
+      video.load();
+      player.classList.remove("hidden");
+      video.play();
+    }
+
+    // Video yopish funksiyasi
+    function closeVideo() {
+      const player = document.getElementById("video-player");
+      const video = document.getElementById("anime-video");
+      video.pause();
+      video.currentTime = 0;
+      player.classList.add("hidden");
+    }
+  </script>
+</body>
+</html>
